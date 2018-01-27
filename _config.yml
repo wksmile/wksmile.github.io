@@ -62,8 +62,6 @@ steam:              username
 #xmpp:              username@server.com
 #hackernews:        username
 
-port:   3000
-
 # Gems
 gems:
   - jekyll-mentions
@@ -76,3 +74,9 @@ jekyll-mentions:
 
 # Exclude list
 exclude: [README.md, Gemfile, Gemfile.lock, node_modules, gulpfile.js, package.json, _site, src, vendor, CNAME, LICENSE, Rakefile]
+
+########################################add by myself############################
+# 允许文件修改时自动重新生成网站h
+Regeneration: -watch
+
+port:   3000

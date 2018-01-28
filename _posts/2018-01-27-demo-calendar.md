@@ -1,5 +1,5 @@
 ---
-layout: calendar
+layout: demo-calendar
 title: "Calendar"
 date: 2018-01-27
 excerpt: "原生javascript实现一个日历"

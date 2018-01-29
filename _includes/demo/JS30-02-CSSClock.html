@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS + CSS Clock</title>
+</head>
+<body>
+
+<div class="clock">
+    <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+    </div>
+</div>
+
+
+<style>
+    html {
+        background:#018DED url('/demo/javascript30/02JavascriptCssClock/img/true.jpg');
+        background-size: cover;
+        font-family:'helvetica neue';
+        text-align: center;
+        font-size: 10px;
+        overflow: hidden;
+    }
+
+    body {
+        font-size: 2rem;
+        display:flex;
+        flex:1;
+        min-height: 100vh;
+        align-items: center;
+    }
+
+    .clock {
+        width: 30rem;
+        height: 30rem;
+        border:20px solid white;
+        border-radius:50%;
+        margin:50px auto;
+        position: relative;
+        padding:2rem;
+        box-shadow:
+            0 0 0 4px rgba(0,0,0,0.1),
+            inset 0 0 0 3px #EFEFEF,
+            inset 0 0 10px black,
+            0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+        width:50%;
+        height:6px;
+        position: absolute;
+        top:50%;
+        right: 14rem;
+        /*transform-origin: 90% 50%;*/
+        transform: rotate(90deg);
+        transition-timing-function: cubic-bezier(0.9, 0.54, 0.26, 1.68);
+    }
+
+    /*.hour-hand {*/
+    /*width: 40%;*/
+    /*height:10px;*/
+    /*margin-top: -5px;*/
+    /*border-bottom-left-radius: .5em;*/
+    /*border-top-left-radius: .5em;*/
+    /*transition: all 3s;*/
+    /*}*/
+
+    .hour-hand {
+        border: 6px solid transparent;
+        border-right: 9rem solid #fff;
+        width: 0;
+        height: 0px;
+        margin-top: -6px;
+        transition: all .1s;
+        transform-origin: 8rem 50%;
+    }
+
+    .min-hand {
+        border: 4px solid transparent;
+        border-right: 12rem solid #fff;
+        width: 0;
+        height: 0px;
+        margin-top: -4px;
+        transition: all .1s;
+        transform-origin: 11rem 50%;
+    }
+
+    .second-hand {
+        border: 2px solid transparent;
+        border-right: 15rem solid #fff;
+        width: 0;
+        height: 0px;
+        margin-top: -2px;
+        transition: all .05s;
+        transform-origin: 14rem 50%;
+    }
+
+</style>
+
+<script>
+    let hourHand = document.getElementsByClassName('hour-hand')[0]
+    let minHand = document.getElementsByClassName('min-hand')[0]
+    let secondHand = document.getElementsByClassName('second-hand')[0]
+
+    // 根据时间分小时分秒算三个指针旋转的角度
+    function getRotateByTime() {
+        let nowTime = new Date()
+        let hour = nowTime.getHours()
+        let minute = nowTime.getMinutes()
+        let seconds = nowTime.getSeconds()
+
+        let secondsRotate = (seconds/60)*360 + 90
+        if (secondsRotate === 90) secondHand.style.transition = 'all 0s';
+        else secondHand.style.transition = 'all 0.05s';
+        secondHand.style.transform = `rotate(${secondsRotate}deg)`
+
+        let minuteRotate = (minute/60)*360 + 90
+        if (minuteRotate === 90) minHand.style.transition = 'all 0s';
+        else minHand.style.transition = 'all 0.1s';
+        minHand.style.transform = `rotate(${minuteRotate}deg)`
+
+        let hourRotate = (hour/12 + minute/12/60)*360 + 90
+        hourHand.style.transform = `rotate(${hourRotate}deg)`
+
+        secondHand.style.transitionTimingFunction = 'cubic-bezier(0.1, 2.7, 0.58, 1)'
+    }
+
+    setInterval(getRotateByTime,1000)
+
+    getRotateByTime()
+
+    setDate();
+</script>
+</body>
+</html>

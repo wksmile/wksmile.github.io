@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type Ahead 👀</title>
+    <link rel="stylesheet" href="/demo/javascript30/06JavascriptTypeAhead/style.css">
+    <style>
+        .population {
+
+        }
+    </style>
+</head>
+<body>
+
+<form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+        <li>Filter for a city</li>
+        <li>or a state</li>
+    </ul>
+</form>
+<script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+    const ulLabel = document.getElementsByClassName('suggestions')[0]
+
+    const cities = [];
+    fetch(endpoint)
+        .then(blob => blob.json())
+        .then(data =>
+        {
+            cities.push(...data)
+        });
+
+    //  console.log(inputLabel)
+    function handleChange(e) {
+        let inputValue =  this.value
+        console.log(inputValue)
+        //console.log(cities)
+        if(cities) {
+            var filterCities = cities.filter(city => {
+                    var myRe = new RegExp(`${inputValue}`,"i")
+                    return myRe.exec(city.city) || myRe.exec(city.state)
+                }
+            )
+            console.log(filterCities)
+            produceLi(filterCities)
+        }
+    }
+
+    function produceLi(filterCities) {
+        ulLabel.innerHTML = ""
+        let fragment = document.createDocumentFragment()
+        let length = filterCities.length
+        for(let i=0;i<length;i++){
+            let li = document.createElement('li')
+            li.innerHTML = `${filterCities[i].city},${filterCities[i].state} <span class='population'>${filterCities[i].population}</span>`
+            fragment.appendChild(li)
+        }
+        ulLabel.appendChild(fragment)
+    }
+
+    const inputLabel = document.getElementsByClassName('search')[0]
+    inputLabel.addEventListener('input',handleChange)
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@ tags: [project online webapp]
 comments: true
 ---
 
-### 请用手机扫下面的二维码在手机上查看
+### 请用手机扫下面的二维码在手机上查看或者[点击这里](http://47.100.178.237/login)换成手机模式查看
 
 <figure>
 	<img src="/assets/images/applyjob.png">
